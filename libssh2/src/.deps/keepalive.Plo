@@ -1,0 +1,196 @@
+keepalive.lo: keepalive.c libssh2_priv.h libssh2_config.h \
+ c:\mingw\include\windows.h \
+ c:\mingw\lib\gcc\mingw32\5.3.0\include\stdarg.h \
+ c:\mingw\include\windef.h c:\mingw\include\w32api.h \
+ c:\mingw\include\sdkddkver.h c:\mingw\include\winnt.h \
+ c:\mingw\include\winerror.h c:\mingw\include\string.h \
+ c:\mingw\include\_mingw.h c:\mingw\include\msvcrtver.h \
+ c:\mingw\lib\gcc\mingw32\5.3.0\include\stddef.h \
+ c:\mingw\include\strings.h c:\mingw\include\wchar.h \
+ c:\mingw\include\basetsd.h c:\mingw\include\pshpack4.h \
+ c:\mingw\include\poppack.h c:\mingw\include\wincon.h \
+ c:\mingw\include\winbase.h c:\mingw\include\wingdi.h \
+ c:\mingw\include\winuser.h c:\mingw\include\winnls.h \
+ c:\mingw\include\winver.h c:\mingw\include\winnetwk.h \
+ c:\mingw\include\winreg.h c:\mingw\include\winsvc.h \
+ c:\mingw\include\ws2tcpip.h c:\mingw\include\winsock2.h \
+ c:\mingw\include\stdio.h c:\mingw\include\sys/types.h \
+ c:\mingw\include\time.h c:\mingw\include\sys\types.h \
+ c:\mingw\include\inttypes.h \
+ c:\mingw\lib\gcc\mingw32\5.3.0\include\stdint.h \
+ c:\mingw\include\stdint.h ../include/libssh2.h \
+ c:\mingw\include\sys\stat.h ../include/libssh2_publickey.h \
+ ../include/libssh2.h ../include/libssh2_sftp.h misc.h crypto.h openssl.h \
+ c:\mingw\include\openssl\opensslconf.h c:\mingw\include\openssl\sha.h \
+ c:\mingw\include\openssl\e_os2.h c:\mingw\include\openssl\md5.h \
+ c:\mingw\include\openssl\evp.h c:\mingw\include\openssl\ossl_typ.h \
+ c:\mingw\include\openssl\symhacks.h c:\mingw\include\openssl\bio.h \
+ c:\mingw\include\openssl\crypto.h c:\mingw\include\stdlib.h \
+ c:\mingw\include\openssl\stack.h c:\mingw\include\openssl\safestack.h \
+ c:\mingw\include\openssl\opensslv.h c:\mingw\include\openssl\objects.h \
+ c:\mingw\include\openssl\obj_mac.h c:\mingw\include\openssl\asn1.h \
+ c:\mingw\include\openssl\bn.h c:\mingw\include\openssl\hmac.h \
+ c:\mingw\include\openssl\pem.h c:\mingw\include\openssl\x509.h \
+ c:\mingw\include\openssl\buffer.h c:\mingw\include\openssl\ec.h \
+ c:\mingw\include\openssl\ecdsa.h c:\mingw\include\openssl\ecdh.h \
+ c:\mingw\include\openssl\rsa.h c:\mingw\include\openssl\dsa.h \
+ c:\mingw\include\openssl\dh.h c:\mingw\include\openssl\x509_vfy.h \
+ c:\mingw\include\openssl\lhash.h c:\mingw\include\openssl\pkcs7.h \
+ c:\mingw\include\openssl\pem2.h c:\mingw\include\openssl\rand.h \
+ transport.h packet.h
+
+libssh2_priv.h:
+
+libssh2_config.h:
+
+c:\mingw\include\windows.h:
+
+c:\mingw\lib\gcc\mingw32\5.3.0\include\stdarg.h:
+
+c:\mingw\include\windef.h:
+
+c:\mingw\include\w32api.h:
+
+c:\mingw\include\sdkddkver.h:
+
+c:\mingw\include\winnt.h:
+
+c:\mingw\include\winerror.h:
+
+c:\mingw\include\string.h:
+
+c:\mingw\include\_mingw.h:
+
+c:\mingw\include\msvcrtver.h:
+
+c:\mingw\lib\gcc\mingw32\5.3.0\include\stddef.h:
+
+c:\mingw\include\strings.h:
+
+c:\mingw\include\wchar.h:
+
+c:\mingw\include\basetsd.h:
+
+c:\mingw\include\pshpack4.h:
+
+c:\mingw\include\poppack.h:
+
+c:\mingw\include\wincon.h:
+
+c:\mingw\include\winbase.h:
+
+c:\mingw\include\wingdi.h:
+
+c:\mingw\include\winuser.h:
+
+c:\mingw\include\winnls.h:
+
+c:\mingw\include\winver.h:
+
+c:\mingw\include\winnetwk.h:
+
+c:\mingw\include\winreg.h:
+
+c:\mingw\include\winsvc.h:
+
+c:\mingw\include\ws2tcpip.h:
+
+c:\mingw\include\winsock2.h:
+
+c:\mingw\include\stdio.h:
+
+c:\mingw\include\sys/types.h:
+
+c:\mingw\include\time.h:
+
+c:\mingw\include\sys\types.h:
+
+c:\mingw\include\inttypes.h:
+
+c:\mingw\lib\gcc\mingw32\5.3.0\include\stdint.h:
+
+c:\mingw\include\stdint.h:
+
+../include/libssh2.h:
+
+c:\mingw\include\sys\stat.h:
+
+../include/libssh2_publickey.h:
+
+../include/libssh2.h:
+
+../include/libssh2_sftp.h:
+
+misc.h:
+
+crypto.h:
+
+openssl.h:
+
+c:\mingw\include\openssl\opensslconf.h:
+
+c:\mingw\include\openssl\sha.h:
+
+c:\mingw\include\openssl\e_os2.h:
+
+c:\mingw\include\openssl\md5.h:
+
+c:\mingw\include\openssl\evp.h:
+
+c:\mingw\include\openssl\ossl_typ.h:
+
+c:\mingw\include\openssl\symhacks.h:
+
+c:\mingw\include\openssl\bio.h:
+
+c:\mingw\include\openssl\crypto.h:
+
+c:\mingw\include\stdlib.h:
+
+c:\mingw\include\openssl\stack.h:
+
+c:\mingw\include\openssl\safestack.h:
+
+c:\mingw\include\openssl\opensslv.h:
+
+c:\mingw\include\openssl\objects.h:
+
+c:\mingw\include\openssl\obj_mac.h:
+
+c:\mingw\include\openssl\asn1.h:
+
+c:\mingw\include\openssl\bn.h:
+
+c:\mingw\include\openssl\hmac.h:
+
+c:\mingw\include\openssl\pem.h:
+
+c:\mingw\include\openssl\x509.h:
+
+c:\mingw\include\openssl\buffer.h:
+
+c:\mingw\include\openssl\ec.h:
+
+c:\mingw\include\openssl\ecdsa.h:
+
+c:\mingw\include\openssl\ecdh.h:
+
+c:\mingw\include\openssl\rsa.h:
+
+c:\mingw\include\openssl\dsa.h:
+
+c:\mingw\include\openssl\dh.h:
+
+c:\mingw\include\openssl\x509_vfy.h:
+
+c:\mingw\include\openssl\lhash.h:
+
+c:\mingw\include\openssl\pkcs7.h:
+
+c:\mingw\include\openssl\pem2.h:
+
+c:\mingw\include\openssl\rand.h:
+
+transport.h:
+
+packet.h:

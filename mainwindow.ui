@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>690</width>
+    <height>526</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>SFTPTool</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QGroupBox" name="GRPBOX_LOCAL">
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>10</y>
+      <width>291</width>
+      <height>501</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>本地文件</string>
+    </property>
+    <widget class="QTreeWidget" name="TREE_LOCAL">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>170</y>
+       <width>271</width>
+       <height>321</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string>文件名</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QLineEdit" name="EDIT_SERVER">
+     <property name="geometry">
+      <rect>
+       <x>54</x>
+       <y>31</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="EDIT_USER">
+     <property name="geometry">
+      <rect>
+       <x>54</x>
+       <y>71</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="EDIT_PASSWORD">
+     <property name="geometry">
+      <rect>
+       <x>54</x>
+       <y>111</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LAB_SERVER">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>33</y>
+       <width>41</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>服务器</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LAB_USER">
+     <property name="geometry">
+      <rect>
+       <x>18</x>
+       <y>73</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>用户</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LAB_PASSWORD">
+     <property name="geometry">
+      <rect>
+       <x>18</x>
+       <y>113</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>密码</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="BTN_LOGOUT">
+     <property name="geometry">
+      <rect>
+       <x>188</x>
+       <y>89</y>
+       <width>81</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>断开</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="BTN_LOGIN">
+     <property name="geometry">
+      <rect>
+       <x>188</x>
+       <y>48</y>
+       <width>81</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>登录</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="BTN_SELECT_PATH">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>143</y>
+       <width>21</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>..</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="EDIT_LOCAL_PATH">
+     <property name="geometry">
+      <rect>
+       <x>44</x>
+       <y>145</y>
+       <width>211</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LAB_LOCAL_PATH">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>146</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>路径</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="GRPBOX_KUNKA">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>10</y>
+      <width>291</width>
+      <height>501</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>kunka</string>
+    </property>
+    <widget class="QTreeWidget" name="TREE_KUNKA_SERVER">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>271</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string notr="true">服务器</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>上传选项</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QLabel" name="LAB_KUNKA_PATH">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>152</y>
+       <width>311</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QTreeWidget" name="TREE_KUNKA_REMOTE_FILE">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>170</y>
+       <width>271</width>
+       <height>321</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string>文件名</string>
+      </property>
+     </column>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="GRPBOX_DUMMY">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>10</y>
+      <width>291</width>
+      <height>501</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>dummy</string>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <widget class="QTreeWidget" name="TREE_DUMMY_SERVER">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>271</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string notr="true">服务器</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>上传选项</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QLabel" name="LAB_DUMMY_PATH">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>152</y>
+       <width>311</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QTreeWidget" name="TREE_DUMMY_REMOTE_FILE">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>170</y>
+       <width>271</width>
+       <height>321</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string>文件名</string>
+      </property>
+     </column>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="GRPBOX_99">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>10</y>
+      <width>291</width>
+      <height>501</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>99</string>
+    </property>
+    <widget class="QTreeWidget" name="TREE_99_SERVER">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>271</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string notr="true">服务器</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>上传选项</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QLabel" name="LAB_99_PATH">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>152</y>
+       <width>271</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QTreeWidget" name="TREE_99_REMOTE_FILE">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>170</y>
+       <width>271</width>
+       <height>321</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string>文件名</string>
+      </property>
+     </column>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="BTN_UPLOAD">
+    <property name="geometry">
+     <rect>
+      <x>307</x>
+      <y>337</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>一键上传</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="BTN_DOWNLOAD">
+    <property name="geometry">
+     <rect>
+      <x>307</x>
+      <y>417</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>下载</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="COMBOX_GAME">
+    <property name="geometry">
+     <rect>
+      <x>304</x>
+      <y>59</y>
+      <width>81</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>99</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>dummy</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>kunka</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QPushButton" name="BTN_FLUSH_FILE">
+    <property name="geometry">
+     <rect>
+      <x>307</x>
+      <y>257</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>刷新文件</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

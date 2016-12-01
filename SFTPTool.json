@@ -1,0 +1,25 @@
+{
+    "local_root_path": "c:/",
+    
+    "99": 
+    [
+        {
+            "host": "54.169.73.104",
+            "user": "kunka",
+            "password": "topkunka"
+        },
+        {
+            "host": "54.169.140.152",
+            "user": "kunka",
+            "password": "topfunkunka"
+        }
+    ],
+    "dummy": 
+    [
+
+    ],
+    "kunka": 
+    [
+
+    ]
+}
