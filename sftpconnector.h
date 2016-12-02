@@ -23,9 +23,9 @@ public:
 
     void read_sftp_file_list(QString file);
 
-    void download_file(QString& file_name);
+    void download_file(QString& file_name, QString save_path = NULL);
 
-    void upload_file(QString& file_name);
+    void upload_file(QString& file_name, QString absolute_path = NULL);
 
     void flush_remote_directory();
 

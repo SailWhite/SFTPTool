@@ -2,6 +2,7 @@
 #include "sftpwindow.h"
 #include "sftpconnector.h"
 #include "sftpfilemanager.h"
+#include "sftpbackupdialog.h"
 #include <QFileDialog>
 
 SftpWindow::SftpWindow(Ui::MainWindow* pWindow)
@@ -14,6 +15,8 @@ SftpWindow::SftpWindow(Ui::MainWindow* pWindow)
         m_connector_list.insert(i, new SftpList);
         m_file_manager.insert(i, new SftpFileManager(this));
     }
+
+    m_backup_dialog = new SftpBackupDialog(this);
 
     init_singnals();
     init_window();
@@ -29,6 +32,8 @@ SftpWindow::~SftpWindow()
         delete m_file_manager.value(i);
     }
 
+    delete m_backup_dialog;
+
     del_singnals();
 }
 
@@ -38,6 +43,7 @@ void SftpWindow::init_singnals()
     QObject::connect(m_ui_context->BTN_DOWNLOAD, SIGNAL(pressed()), this, SLOT(download_file()));
     QObject::connect(m_ui_context->BTN_UPLOAD, SIGNAL(pressed()), this, SLOT(upload_file()));
     QObject::connect(m_ui_context->BTN_FLUSH_FILE, SIGNAL(pressed()), this, SLOT(flush_file()));
+    QObject::connect(m_ui_context->BTN_BACKUP, SIGNAL(pressed()), this, SLOT(backup_file()));
     QObject::connect(m_ui_context->TREE_LOCAL, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(change_current_local_path(QTreeWidgetItem*, int)));
     QObject::connect(m_ui_context->BTN_LOGIN, SIGNAL(pressed()), this, SLOT(connect_sftp_server()));
     QObject::connect(m_ui_context->BTN_LOGOUT, SIGNAL(pressed()), this, SLOT(disconnect_sftp_server()));
@@ -56,6 +62,7 @@ void SftpWindow::del_singnals()
     QObject::disconnect(m_ui_context->BTN_DOWNLOAD, SIGNAL(pressed()), this, SLOT(download_file()));
     QObject::disconnect(m_ui_context->BTN_UPLOAD, SIGNAL(pressed()), this, SLOT(upload_file()));
     QObject::disconnect(m_ui_context->BTN_FLUSH_FILE, SIGNAL(pressed()), this, SLOT(flush_file()));
+    QObject::disconnect(m_ui_context->BTN_BACKUP, SIGNAL(pressed()), this, SLOT(backup_file()));
     QObject::disconnect(m_ui_context->TREE_LOCAL, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(change_current_local_path(QTreeWidgetItem*, int)));
     QObject::disconnect(m_ui_context->BTN_LOGIN, SIGNAL(pressed()), this, SLOT(connect_sftp_server()));
     QObject::disconnect(m_ui_context->BTN_LOGOUT, SIGNAL(pressed()), this, SLOT(disconnect_sftp_server()));
@@ -462,6 +469,25 @@ QTreeWidget* SftpWindow::get_current_remote_file_tree()
     return NULL;
 }
 
+QTreeWidget* SftpWindow::get_current_remote_server_tree()
+{
+    int current_game = m_ui_context->COMBOX_GAME->currentIndex();
+    if (0 == current_game)
+    {
+        return m_ui_context->TREE_99_SERVER;
+    }
+    else if (1 == current_game)
+    {
+        return m_ui_context->TREE_DUMMY_SERVER;
+    }
+    else if (2 == current_game)
+    {
+        return m_ui_context->TREE_KUNKA_SERVER;
+    }
+
+    return NULL;
+}
+
 void SftpWindow::display_error_code(int error)
 {
     if (0 == error)
@@ -533,4 +559,33 @@ void SftpWindow::select_file_path()
     {
         m_file_manager.value(index)->flush_local_file(path, true);
     }
+}
+
+void SftpWindow::backup_file()
+{
+    if (0 == m_ui_context->COMBOX_GAME->currentIndex())
+    {
+        QTreeWidgetItem* item = m_ui_context->TREE_99_REMOTE_FILE->currentItem();
+        if (NULL == item)
+        {
+            return;
+        }
+    }
+    else if(1 == m_ui_context->COMBOX_GAME->currentIndex())
+    {
+        QTreeWidgetItem* item = m_ui_context->TREE_DUMMY_REMOTE_FILE->currentItem();
+        if (NULL == item)
+        {
+            return;
+        }
+    }
+    else if(2 == m_ui_context->COMBOX_GAME->currentIndex())
+    {
+        QTreeWidgetItem* item = m_ui_context->TREE_KUNKA_REMOTE_FILE->currentItem();
+        if (NULL == item)
+        {
+            return;
+        }
+    }
+    m_backup_dialog->show();
 }

@@ -191,7 +191,7 @@ bool SftpSession::is_directory(QString& file_name)
     return false;
 }
 
-void SftpSession::download_file(QString& file_name)
+void SftpSession::download_file(QString& file_name, QString save_path)
 {
     if (NULL == m_sftp_session)
     {
@@ -209,13 +209,24 @@ void SftpSession::download_file(QString& file_name)
         return;
     }
 
-    transport_file_data(file_name);
+    transport_file_data(file_name, save_path);
 }
 
-void SftpSession::transport_file_data(QString& file_name)
+void SftpSession::transport_file_data(QString& file_name, QString save_path)
 {
-    QString save_path = m_sftp_window->get_local_file_path() + "/" + file_name;
-    m_tempstorage = fopen(save_path.toLatin1().data(), "wb");
+    QString path;
+    if (NULL == save_path)
+    {
+        path = m_sftp_window->get_local_file_path() + "/" + file_name;
+        m_progress_dialog->setLabelText(tr("Downloading %1...").arg(file_name));
+    }
+    else
+    {
+        path = save_path + "/" + file_name;
+        m_progress_dialog->setLabelText(tr("Backup %1...").arg(file_name));
+    }
+
+    m_tempstorage = fopen(path.toLatin1().data(), "wb");
     if (NULL == m_tempstorage)
     {
         m_console.setIcon(QMessageBox::Warning);
@@ -224,7 +235,6 @@ void SftpSession::transport_file_data(QString& file_name)
         return;
     }
 
-    m_progress_dialog->setLabelText(tr("Downloading %1...").arg(file_name));
     m_progress_dialog->setMaximum(m_file_size.find(file_name).value());
     m_progress_dialog->show();
 
@@ -315,14 +325,22 @@ void SftpSession::update_upload_progress_dialog()
     m_mutex_lock.unlock();
 }
 
-void SftpSession::upload_file(QString& file_name)
+void SftpSession::upload_file(QString& file_name, QString& absolute_path)
 {
     if (NULL == m_sftp_session || file_name.isEmpty())
     {
         return;
     }
 
-    m_tempstorage = fopen((m_sftp_window->get_local_file_path() + "/" + file_name).toLatin1().data(), "rb");
+    if (NULL == absolute_path)
+    {
+        m_tempstorage = fopen((m_sftp_window->get_local_file_path() + "/" + file_name).toLatin1().data(), "rb");
+    }
+    else
+    {
+        m_tempstorage = fopen((absolute_path + "/" + file_name).toLatin1().data(), "rb");
+    }
+
     if (!m_tempstorage)
     {
         m_console.setIcon(QMessageBox::Warning);

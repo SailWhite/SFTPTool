@@ -10,6 +10,7 @@
 
 class SftpConnector;
 class SftpFileManager;
+class SftpBackupDialog;
 
 typedef QHash<QString, SftpConnector*> SftpList;
 
@@ -19,6 +20,7 @@ class SftpWindow : public QObject
 
     friend class SftpFileManager;
     friend class SftpSession;
+    friend class SftpBackupDialog;
 
 public:
     SftpWindow(Ui::MainWindow* pWindow);
@@ -28,6 +30,8 @@ public:
     void display_error_code(int error);
 
     QTreeWidget* get_current_remote_file_tree();
+
+    QTreeWidget* get_current_remote_server_tree();
 
     void add_file_tree_item(QTreeWidget* tree, QTreeWidgetItem* file_item);
 
@@ -65,13 +69,15 @@ private slots:
 
     void upload_file();
 
-    void disconnect_sftp_server();    
+    void disconnect_sftp_server();
 
     void change_current_local_path(QTreeWidgetItem* pItem, int column);
 
     void change_current_remote_path(QTreeWidgetItem* pItem, int column);
 
     void select_file_path();
+
+    void backup_file();
 
 public slots:
     void connect_sftp_server();
@@ -86,6 +92,8 @@ private:
     QHash<int, SftpList*> m_connector_list;
 
     SftpUploadDialog m_upload_dialog;
+
+    SftpBackupDialog* m_backup_dialog;
 
     QMessageBox m_console;
 

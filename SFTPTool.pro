@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     sftpfilemanager.cpp \
     sftpsession.cpp \
     sftpconfigmanager.cpp \
-    sftpuploaddialog.cpp
+    sftpuploaddialog.cpp \
+    sftpbackupdialog.cpp
 
 HEADERS  += mainwindow.h \
     sftpwindow.h \
@@ -26,7 +27,8 @@ HEADERS  += mainwindow.h \
     sftpfilemanager.h \
     sftpsession.h \
     sftpconfigmanager.h \
-    sftpuploaddialog.h
+    sftpuploaddialog.h \
+    sftpbackupdialog.h
 
 FORMS    += mainwindow.ui
 

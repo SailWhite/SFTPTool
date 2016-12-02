@@ -375,7 +375,7 @@
     <property name="geometry">
      <rect>
       <x>307</x>
-      <y>337</y>
+      <y>360</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -388,7 +388,7 @@
     <property name="geometry">
      <rect>
       <x>307</x>
-      <y>417</y>
+      <y>430</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -426,13 +426,26 @@
     <property name="geometry">
      <rect>
       <x>307</x>
-      <y>257</y>
+      <y>290</y>
       <width>75</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string>刷新文件</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="BTN_BACKUP">
+    <property name="geometry">
+     <rect>
+      <x>308</x>
+      <y>220</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>备份</string>
     </property>
    </widget>
   </widget>

@@ -41,16 +41,16 @@ public:
 
     bool is_directory(QString& file_name);
 
-    void download_file(QString& file_name);
+    void download_file(QString& file_name, QString save_path);
 
-    void upload_file(QString& file_name);
+    void upload_file(QString& file_name, QString& absolute_path);
 
     void set_server_name(QString& server_name);
 
 private:
     int init_libssh2();
 
-    void transport_file_data(QString& file_name);
+    void transport_file_data(QString& file_name, QString save_path);
 
 private slots:
     void update_download_progress_dialog();
