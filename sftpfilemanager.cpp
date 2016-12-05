@@ -68,6 +68,10 @@ void SftpFileManager::flush_local_file(const QString& file_name, bool absolute)
     QFileInfoList::iterator it = file_list.begin();
     for (; it != file_list.end(); ++it)
     {
+        if ((file_path == m_root_path) && (it->fileName() == "." || it->fileName() == ".."))
+        {
+            continue;
+        }
         QString file_name;
         QPixmap icon;
         QTreeWidgetItem* tree_item = new QTreeWidgetItem;
@@ -101,6 +105,10 @@ void SftpFileManager::flush_local_file()
     QFileInfoList::iterator it = file_list.begin();
     for (; it != file_list.end(); ++it)
     {
+        if ((m_path_record.back() == m_root_path) && (it->fileName() == "." || it->fileName() == ".."))
+        {
+            continue;
+        }
         QString file_name;
         QPixmap icon;
         QTreeWidgetItem* tree_item = new QTreeWidgetItem;

@@ -1,5 +1,6 @@
 #include "sftpsession.h"
 #include "sftpwindow.h"
+#include <time.h>
 #include "stdio.h"
 
 SftpSession::SftpSession(SftpWindow* sftp_window):m_libssh2_session(NULL), m_sftp_session(NULL), m_tempstorage(NULL), m_is_download(false), m_is_upload(false)
@@ -92,13 +93,6 @@ int SftpSession::auth_login_info(QString& user, QString& password)
         return -1;
     }
 
-    m_sftp_session = libssh2_sftp_init(m_libssh2_session);
-    if (!m_sftp_session)
-    {
-        m_sftp_window->display_error_code(1);
-        return -1;
-    }
-
     return 0;
 }
 
@@ -109,8 +103,10 @@ void SftpSession::set_server_name(QString& server_name)
 
 void SftpSession::read_sftp_file_list(QString path)
 {
-    if (NULL == m_sftp_session)
+    m_sftp_session = libssh2_sftp_init(m_libssh2_session);
+    if (!m_sftp_session)
     {
+        m_sftp_window->display_error_code(1);
         return;
     }
 
@@ -193,15 +189,16 @@ bool SftpSession::is_directory(QString& file_name)
 
 void SftpSession::download_file(QString& file_name, QString save_path)
 {
-    if (NULL == m_sftp_session)
+    m_sftp_session = libssh2_sftp_init(m_libssh2_session);
+    if (!m_sftp_session || file_name.isEmpty())
     {
+        m_sftp_window->display_error_code(1);
         return;
     }
-
     //path file
     QString file_path = m_current_path.back() + "/" + file_name;
-    m_sftp_file_handle = libssh2_sftp_open(m_sftp_session, file_path.toLatin1().data(), LIBSSH2_FXF_READ, 0);
-    if (!m_sftp_file_handle)
+    m_sftp_download_handle = libssh2_sftp_open(m_sftp_session, file_path.toLatin1().data(), LIBSSH2_FXF_READ, 0);
+    if (!m_sftp_download_handle)
     {
         m_console.setIcon(QMessageBox::Warning);
         m_console.setText("download file failure!");
@@ -238,7 +235,7 @@ void SftpSession::transport_file_data(QString& file_name, QString save_path)
     m_progress_dialog->setMaximum(m_file_size.find(file_name).value());
     m_progress_dialog->show();
 
-    m_sftp_window->m_ui_context->centralWidget->setEnabled(false);
+    //m_sftp_window->m_ui_context->centralWidget->setEnabled(false);
 
     m_download_timer->start(100);
 
@@ -255,7 +252,7 @@ void SftpSession::run()
         int size;
         do
         {
-            size = libssh2_sftp_read(m_sftp_file_handle, down_load_data, sizeof(down_load_data));
+            size = libssh2_sftp_read(m_sftp_download_handle, down_load_data, sizeof(down_load_data));
             if (size > 0)
             {
                 m_mutex_lock.lock();
@@ -273,35 +270,46 @@ void SftpSession::run()
     }
     else if (m_is_upload)
     {
-        char read_data[1024*100];
-        int read_size, write_size;
-        do
+        QHash<QString, LIBSSH2_SFTP_HANDLE*>::iterator it = m_sftp_upload_handles.begin();
+        for (; it != m_sftp_upload_handles.end(); ++it)
         {
-            read_size = fread(read_data, 1, sizeof(read_data), m_tempstorage);
-            if (read_size <= 0)
-            {
-                break;
-            }
-
-            char* pData = read_data;
+            int write_size;
             do
             {
-                m_mutex_lock.lock();
-                write_size = libssh2_sftp_write(m_sftp_file_handle, pData, read_size);
-                m_mutex_lock.unlock();
-
-                if(write_size < 0)
+                char read_data[1024*100];
+                int read_size;
+                //m_mutex_lock.lock();
+                read_size = fread(read_data, 1, sizeof(read_data), m_upload_files.value(it.key()));
+                //m_mutex_lock.unlock();
+                if (read_size <= 0)
                 {
                     break;
                 }
-                pData += write_size;
-                read_size -= write_size;
-            } while (read_size);
 
-        } while (write_size > 0);
+                char* pData = read_data;
+                do
+                {
+                    m_mutex_lock.lock();
+                    write_size = libssh2_sftp_write(it.value(), pData, read_size);
+                    m_mutex_lock.unlock();
+
+                    if (write_size < 0)
+                    {
+                        break;
+                    }
+                    pData += write_size;
+                    read_size -= write_size;
+                } while (read_size);
+
+            } while (write_size > 0);
+            //m_mutex_lock.lock();
+            fseek(m_upload_files.value(it.key()), 0L, SEEK_SET);
+            //m_mutex_lock.unlock();
+        }
 
         m_is_upload = false;
-        upload_finish();
+
+        //upload_finish();
     }
 }
 
@@ -316,95 +324,140 @@ void SftpSession::update_download_progress_dialog()
 
 void SftpSession::update_upload_progress_dialog()
 {
-    m_mutex_lock.lock();
-    int filesize = libssh2_sftp_tell(m_sftp_file_handle);
-    //m_progress_dialog->setValue(filesize);
-    m_sftp_window->m_mutex_lock.lock();
-    m_sftp_window->get_upload_dialog().set_current_value(m_server_name, filesize);
-    m_sftp_window->m_mutex_lock.unlock();
-    m_mutex_lock.unlock();
+    //m_mutex_lock.lock();
+    QHash<QString, LIBSSH2_SFTP_HANDLE*>::iterator it = m_sftp_upload_handles.begin();
+    for (; it != m_sftp_upload_handles.end(); ++it)
+    {
+        int filesize = libssh2_sftp_tell(it.value());
+        QString key = it.key();
+        m_upload_dialog.set_current_value(key, filesize);
+    }
+    if (!isRunning())
+    {
+        exit_upload();
+    }
+    //m_mutex_lock.unlock();
 }
 
-void SftpSession::upload_file(QString& file_name, QString& absolute_path)
+int SftpSession::upload_file(QString& file_name, QString& absolute_path)
 {
-    if (NULL == m_sftp_session || file_name.isEmpty())
+    m_sftp_session = libssh2_sftp_init(m_libssh2_session);
+    if (!m_sftp_session || file_name.isEmpty())
     {
-        return;
+        m_sftp_window->display_error_code(1);
+        return -1;
     }
 
+    if (isRunning())
+    {
+        return -1;
+    }
+
+    FILE* tempstorage = NULL;
     if (NULL == absolute_path)
     {
-        m_tempstorage = fopen((m_sftp_window->get_local_file_path() + "/" + file_name).toLatin1().data(), "rb");
+        tempstorage = fopen((m_sftp_window->get_local_file_path() + "/" + file_name).toLatin1().data(), "rb");
     }
     else
     {
-        m_tempstorage = fopen((absolute_path + "/" + file_name).toLatin1().data(), "rb");
+        tempstorage = fopen((absolute_path + "/" + file_name).toLatin1().data(), "rb");
     }
 
-    if (!m_tempstorage)
+    if (!tempstorage)
     {
         m_console.setIcon(QMessageBox::Warning);
         m_console.setText("open file failure!");
         m_console.show();
-        return;
+        fclose(tempstorage);
+        exit_upload();
+        return -1;
     }
 
     //path file
     QString file_path = m_current_path.back() + "/" + file_name;
-    m_sftp_file_handle = libssh2_sftp_open(m_sftp_session, file_path.toLatin1().data(),
+    LIBSSH2_SFTP_HANDLE* sftp_file_handle = libssh2_sftp_open(m_sftp_session, file_path.toLatin1().data(),
                           LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC,
                           LIBSSH2_SFTP_S_IRUSR|LIBSSH2_SFTP_S_IWUSR|
                           LIBSSH2_SFTP_S_IRGRP|LIBSSH2_SFTP_S_IROTH);
 
-    if (!m_sftp_file_handle)
+    if (!sftp_file_handle)
     {
         m_console.setIcon(QMessageBox::Warning);
         m_console.setText("upload file failure!");
         m_console.show();
-        return;
+        fclose(tempstorage);
+        exit_upload();
+        return -1;
     }
 
-    fseek(m_tempstorage, 0L, SEEK_END);
-    int filesize = ftell(m_tempstorage);
-    fseek(m_tempstorage, 0L, SEEK_SET);
+    fseek(tempstorage, 0L, SEEK_END);
+    int filesize = ftell(tempstorage);
+    fseek(tempstorage, 0L, SEEK_SET);
 
-    /*m_progress_dialog->setLabelText(tr("uploading %1...").arg(file_name));
-    m_progress_dialog->setMaximum(filesize);
-    m_progress_dialog->show();*/
-    m_sftp_window->m_mutex_lock.lock();
-    m_sftp_window->get_upload_dialog().add_progress_item(m_server_name);
-    m_sftp_window->get_upload_dialog().set_max_value(m_server_name, filesize);
-    m_sftp_window->m_ui_context->centralWidget->setEnabled(false);
-    m_sftp_window->m_mutex_lock.unlock();
+    QString item_name = m_server_name + ":" + file_name;
+    m_upload_dialog.add_progress_item(item_name);
+    m_upload_dialog.set_max_value(item_name, filesize);
 
-    m_upload_timer->start(100);
+    m_sftp_upload_handles.insert(item_name, sftp_file_handle);
+    m_upload_files.insert(item_name, tempstorage);
 
-    m_is_upload = true;
+    //log
+    time_t sec_time = time(NULL);
+    tm* t= localtime(&sec_time);
 
-    start();
+    FILE* log = fopen("./uploadlog.txt", "a");
+    fprintf(log, "[%d-%02d-%02d][%02d:%02d:%02d]:",t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
+    QString strlog = "upload [" + m_server_name + "]" + "[" + file_name + "]" + "    >>    " + file_path + "\n";
+    fputs(strlog.toLatin1().data(), log);
+    fclose(log);
+
+    return 0;
 }
 
 void SftpSession::exit_download()
 {
-    m_sftp_window->m_ui_context->centralWidget->setEnabled(true);
     fclose(m_tempstorage);
     m_tempstorage = NULL;
     m_download_timer->stop();
-    libssh2_sftp_close(m_sftp_file_handle);
+    libssh2_sftp_close(m_sftp_download_handle);
     m_progress_dialog->hide();
     m_sftp_window->flush_file();
 }
 
 void SftpSession::exit_upload()
 {
-    fclose(m_tempstorage);
-    m_tempstorage = NULL;
+    //m_mutex_lock.lock();
+    QHash<QString, LIBSSH2_SFTP_HANDLE*>::iterator it_handles = m_sftp_upload_handles.begin();
+    for (; it_handles != m_sftp_upload_handles.end(); ++it_handles)
+    {
+        delete (*it_handles);
+    }
+    m_sftp_upload_handles.clear();
+
+    QHash<QString, FILE*>::iterator it_files = m_upload_files.begin();
+    for (; it_files != m_upload_files.end(); ++it_files)
+    {
+        fclose((*it_files));
+    }
+    m_upload_files.clear();
+
     m_upload_timer->stop();
-    libssh2_sftp_close(m_sftp_file_handle);
-    //m_progress_dialog->hide();
-    m_sftp_window->m_mutex_lock.lock();
+
+    m_upload_dialog.hide_upload_dialog();
+    m_upload_dialog.clear_item();
+    //m_mutex_lock.unlock();
     m_sftp_window->m_ui_context->centralWidget->setEnabled(true);
-    m_sftp_window->get_upload_dialog().hide_upload_dialog(m_server_name);
-    //m_sftp_window->flush_file();
-    m_sftp_window->m_mutex_lock.unlock();
+}
+
+void SftpSession::run_upload()
+{
+    m_upload_timer->start(100);
+
+    m_is_upload = true;
+
+    m_upload_dialog.show_upload_dialog();
+
+    m_sftp_window->m_ui_context->centralWidget->setEnabled(false);
+
+    start();
 }

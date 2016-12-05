@@ -121,7 +121,12 @@ void SftpConnector::download_file(QString& file_name, QString save_path)
     m_sftp_session->download_file(file_name, save_path);
 }
 
-void SftpConnector::upload_file(QString& file_name, QString absolute_path)
+int SftpConnector::upload_file(QString& file_name, QString absolute_path)
 {
-    m_sftp_session->upload_file(file_name, absolute_path);
+    return m_sftp_session->upload_file(file_name, absolute_path);
+}
+
+void SftpConnector::run_upload()
+{
+    m_sftp_session->run_upload();
 }

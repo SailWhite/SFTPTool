@@ -102,14 +102,17 @@ void SftpBackupDialog::restore_file()
         if (0 == index)
         {
             m_connector_list.value(index)->value(server_name)->upload_file(file_name, BACKUP_FILE_PATH_99);
+            m_connector_list.value(index)->value(server_name)->run_upload();
         }
         else if (1 == index)
         {
             m_connector_list.value(index)->value(server_name)->upload_file(file_name, BACKUP_FILE_PATH_DUMMY);
+            m_connector_list.value(index)->value(server_name)->run_upload();
         }
         else if (2 == index)
         {
             m_connector_list.value(index)->value(server_name)->upload_file(file_name, BACKUP_FILE_PATH_KUNKA);
+            m_connector_list.value(index)->value(server_name)->run_upload();
         }
     }
     hide();

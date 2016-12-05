@@ -25,9 +25,11 @@ public:
 
     void download_file(QString& file_name, QString save_path = NULL);
 
-    void upload_file(QString& file_name, QString absolute_path = NULL);
+    int upload_file(QString& file_name, QString absolute_path = NULL);
 
     void flush_remote_directory();
+
+    void run_upload();
 
 private:
     int create_socket(QString& server);

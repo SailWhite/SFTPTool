@@ -13,6 +13,7 @@
 #include "libssh2.h"
 #include "libssh2_sftp.h"
 #include "ui_mainwindow.h"
+#include "sftpuploaddialog.h"
 
 #include <fcntl.h>
 
@@ -43,9 +44,11 @@ public:
 
     void download_file(QString& file_name, QString save_path);
 
-    void upload_file(QString& file_name, QString& absolute_path);
+    int upload_file(QString& file_name, QString& absolute_path);
 
     void set_server_name(QString& server_name);
+
+    void run_upload();
 
 private:
     int init_libssh2();
@@ -78,7 +81,9 @@ private:
 
     LIBSSH2_SFTP_HANDLE *m_sftp_directory_handle;
 
-    LIBSSH2_SFTP_HANDLE *m_sftp_file_handle;
+    LIBSSH2_SFTP_HANDLE *m_sftp_download_handle;
+
+    QHash<QString, LIBSSH2_SFTP_HANDLE*> m_sftp_upload_handles;
 
     QHash<QString, bool> m_is_directory;
 
@@ -86,11 +91,15 @@ private:
 
     QProgressDialog* m_progress_dialog;
 
+    SftpUploadDialog m_upload_dialog;
+
     QTimer* m_download_timer;
 
     QTimer* m_upload_timer;
 
-    FILE *m_tempstorage;
+    FILE* m_tempstorage;
+
+    QHash<QString, FILE*> m_upload_files;
 
     bool m_is_download;
 

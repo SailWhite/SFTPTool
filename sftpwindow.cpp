@@ -3,6 +3,7 @@
 #include "sftpconnector.h"
 #include "sftpfilemanager.h"
 #include "sftpbackupdialog.h"
+#include "ShellAPI.h"
 #include <QFileDialog>
 
 SftpWindow::SftpWindow(Ui::MainWindow* pWindow)
@@ -54,6 +55,7 @@ void SftpWindow::init_singnals()
     QObject::connect(m_ui_context->TREE_99_SERVER, SIGNAL(itemPressed(QTreeWidgetItem*, int)), this, SLOT(flush_file()));
     QObject::connect(m_ui_context->TREE_DUMMY_SERVER, SIGNAL(itemPressed(QTreeWidgetItem*, int)), this, SLOT(flush_file()));
     QObject::connect(m_ui_context->TREE_KUNKA_SERVER, SIGNAL(itemPressed(QTreeWidgetItem*, int)), this, SLOT(flush_file()));
+    QObject::connect(m_ui_context->BTN_UPLOAD_LOG, SIGNAL(pressed()), this, SLOT(open_upload_log()));
 }
 
 void SftpWindow::del_singnals()
@@ -73,6 +75,7 @@ void SftpWindow::del_singnals()
     QObject::disconnect(m_ui_context->TREE_99_SERVER, SIGNAL(itemPressed(QTreeWidgetItem*, int)), this, SLOT(flush_file()));
     QObject::disconnect(m_ui_context->TREE_DUMMY_SERVER, SIGNAL(itemPressed(QTreeWidgetItem*, int)), this, SLOT(flush_file()));
     QObject::disconnect(m_ui_context->TREE_KUNKA_SERVER, SIGNAL(itemPressed(QTreeWidgetItem*, int)), this, SLOT(flush_file()));
+    QObject::disconnect(m_ui_context->BTN_UPLOAD_LOG, SIGNAL(pressed()), this, SLOT(open_upload_log()));
 }
 
 void SftpWindow::init_window()
@@ -84,6 +87,7 @@ void SftpWindow::init_window()
     m_ui_context->TREE_99_SERVER->setColumnWidth(0, 150);
     m_ui_context->TREE_DUMMY_SERVER->setColumnWidth(0, 150);
     m_ui_context->TREE_KUNKA_SERVER->setColumnWidth(0, 150);
+    m_ui_context->TREE_LOCAL->setSelectionMode(QTreeWidget::ExtendedSelection);
 }
 
 void SftpWindow::init_local_file()
@@ -91,6 +95,7 @@ void SftpWindow::init_local_file()
     int size = m_file_manager.size();
     for (int i = 0; i < size; ++i)
     {
+        m_file_manager.value(i)->set_root_path(SftpConfigManager::instance()->get_local_file_path(i));
         m_file_manager.value(i)->flush_local_file(SftpConfigManager::instance()->get_local_file_path(i), true);
     }
 }
@@ -167,6 +172,7 @@ void SftpWindow::delete_server_info_item(QTreeWidget* tree, QTreeWidgetItem* ser
 void SftpWindow::change_current_local_path(QTreeWidgetItem* pItem, int column)
 {
     int game_index = m_ui_context->COMBOX_GAME->currentIndex();
+    change_current_remote_path(pItem, 0);
     m_file_manager.value(game_index)->flush_local_file(pItem->text(column));
 }
 
@@ -178,6 +184,12 @@ void SftpWindow::change_current_remote_path(QTreeWidgetItem* pItem, int column)
         QString server = m_ui_context->TREE_99_SERVER->currentItem()->text(0);
         QString file_name = pItem->text(column);
 
+        QList<QTreeWidgetItem*> list = m_ui_context->TREE_99_REMOTE_FILE->findItems(file_name, Qt::MatchExactly);
+        if (0 == list.count())
+        {
+            return;
+        }
+
         m_connector_list.value(index)->value(server)->read_sftp_file_list(file_name);
     }
     else if (1 == index)
@@ -185,12 +197,24 @@ void SftpWindow::change_current_remote_path(QTreeWidgetItem* pItem, int column)
         QString server = m_ui_context->TREE_DUMMY_SERVER->currentItem()->text(0);
         QString file_name = pItem->text(column);
 
+        QList<QTreeWidgetItem*> list = m_ui_context->TREE_DUMMY_REMOTE_FILE->findItems(file_name, Qt::MatchExactly);
+        if (0 == list.count())
+        {
+            return;
+        }
+
         m_connector_list.value(index)->value(server)->read_sftp_file_list(pItem->text(column));
     }
     else if (2 == index)
     {
         QString server = m_ui_context->TREE_KUNKA_SERVER->currentItem()->text(0);
         QString file_name = pItem->text(column);
+
+        QList<QTreeWidgetItem*> list = m_ui_context->TREE_KUNKA_REMOTE_FILE->findItems(file_name, Qt::MatchExactly);
+        if (0 == list.count())
+        {
+            return;
+        }
 
         m_connector_list.value(index)->value(server)->read_sftp_file_list(pItem->text(column));
     }
@@ -261,57 +285,75 @@ void SftpWindow::download_file()
 void SftpWindow::upload_file()
 {
     int game_index = m_ui_context->COMBOX_GAME->currentIndex();
-    QTreeWidgetItem* file_item = m_ui_context->TREE_LOCAL->currentItem();
-    if (NULL == file_item)
+    QList<QTreeWidgetItem*> items = m_ui_context->TREE_LOCAL->selectedItems();
+    if (0 == items.count())
     {
         return;
     }
 
-    if (0 == game_index)
+    QSet<SftpConnector*> sftp_session;
+    for (int i; i < items.count(); ++i)
     {
-        QString file_name = file_item->text(0);
-        QTreeWidgetItemIterator it(m_ui_context->TREE_99_SERVER);
-        while (*it)
+        QString file_name = items.at(i)->text(0);
+
+        if (0 == game_index)
         {
-            if (Qt::Checked == (*it)->checkState(1))
+            QTreeWidgetItemIterator it(m_ui_context->TREE_99_SERVER);
+            while (*it)
             {
-                QString server_name = (*it)->text(0);
-                m_connector_list.value(game_index)->value(server_name)->upload_file(file_name);
+                if (Qt::Checked == (*it)->checkState(1))
+                {
+                    QString server_name = (*it)->text(0);
+                    if (-1 == m_connector_list.value(game_index)->value(server_name)->upload_file(file_name))
+                    {
+                        return;
+                    }
+                    sftp_session.insert(m_connector_list.value(game_index)->value(server_name));
+                }
+                ++it ;
             }
-            ++it ;
+        }
+        if (1 == game_index)
+        {
+            QTreeWidgetItemIterator it(m_ui_context->TREE_DUMMY_SERVER);
+            while (*it)
+            {
+                if (Qt::Checked == (*it)->checkState(1))
+                {
+                    QString server_name = (*it)->text(0);
+                    if (-1 == m_connector_list.value(game_index)->value(server_name)->upload_file(file_name))
+                    {
+                        return;
+                    }
+                    sftp_session.insert(m_connector_list.value(game_index)->value(server_name));
+                }
+                ++it ;
+            }
+        }
+        if (2 == game_index)
+        {
+            QTreeWidgetItemIterator it(m_ui_context->TREE_KUNKA_SERVER);
+            while (*it)
+            {
+                if (Qt::Checked == (*it)->checkState(1))
+                {
+                    QString server_name = (*it)->text(0);
+                    if (-1 == m_connector_list.value(game_index)->value(server_name)->upload_file(file_name))
+                    {
+                        return;
+                    }
+                    sftp_session.insert(m_connector_list.value(game_index)->value(server_name));
+                }
+                ++it ;
+            }
         }
     }
-    if (1 == game_index)
+
+    QSet<SftpConnector*>::iterator it = sftp_session.begin();
+    for (; it != sftp_session.end(); ++it)
     {
-        QString file_name = file_item->text(0);
-        QTreeWidgetItemIterator it(m_ui_context->TREE_DUMMY_SERVER);
-        while (*it)
-        {
-            if (Qt::Checked == (*it)->checkState(1))
-            {
-                QString server_name = (*it)->text(0);
-                m_connector_list.value(game_index)->value(server_name)->upload_file(file_name);
-            }
-            ++it ;
-        }
+        (*it)->run_upload();
     }
-    if (2 == game_index)
-    {
-        QString file_name = file_item->text(0);
-        QTreeWidgetItemIterator it(m_ui_context->TREE_KUNKA_SERVER);
-        while (*it)
-        {
-            if (Qt::Checked == (*it)->checkState(1))
-            {
-                QString server_name = (*it)->text(0);
-                m_connector_list.value(game_index)->value(server_name)->upload_file(file_name);
-            }
-            ++it ;
-        }
-    }
-    m_mutex_lock.lock();
-    m_upload_dialog.show_upload_dialog();
-    m_mutex_lock.unlock();
 }
 
 void SftpWindow::connect_sftp_server()
@@ -372,6 +414,34 @@ void SftpWindow::connect_sftp_server()
     //success
     m_connector_list.value(current_game)->insert(server, sftp_connector);
     display_error_code(0);
+}
+
+void SftpWindow::reconnect_sftp_server()
+{
+    QVector<SERVER_CFG> server_config = SftpConfigManager::instance()->get_server_config();
+
+    QVector<SERVER_CFG>::iterator it = server_config.begin();
+    for (; it != server_config.end(); ++it)
+    {
+        m_ui_context->EDIT_SERVER->setText((*it).host);
+        m_ui_context->EDIT_USER->setText((*it).user);
+        m_ui_context->EDIT_PASSWORD->setText((*it).password);
+
+        if (0 == (*it).game)
+        {
+            m_ui_context->COMBOX_GAME->setCurrentIndex(0);
+        }
+        if (1 == (*it).game)
+        {
+            m_ui_context->COMBOX_GAME->setCurrentIndex(1);
+        }
+        if (2 == (*it).game)
+        {
+            m_ui_context->COMBOX_GAME->setCurrentIndex(2);
+        }
+
+        connect_sftp_server();
+    }
 }
 
 void SftpWindow::disconnect_sftp_server()
@@ -496,8 +566,12 @@ void SftpWindow::display_error_code(int error)
     }
     else if (1 == error)
     {
-        m_console.setText("Connect sftp server failed!");
+        m_console.setText("Connect sftp server failed, reconnect!");
         m_console.show();
+        m_ui_context->TREE_99_SERVER->clear();
+        m_ui_context->TREE_DUMMY_SERVER->clear();
+        m_ui_context->TREE_KUNKA_SERVER->clear();
+        reconnect_sftp_server();
     }
     else if (2 == error)
     {
@@ -527,11 +601,6 @@ void SftpWindow::display_file_path(QString& path)
     {
         m_ui_context->LAB_KUNKA_PATH->setText(path);
     }
-}
-
-SftpUploadDialog& SftpWindow::get_upload_dialog()
-{
-    return m_upload_dialog;
 }
 
 void SftpWindow::select_file_path()
@@ -588,4 +657,9 @@ void SftpWindow::backup_file()
         }
     }
     m_backup_dialog->show();
+}
+
+void SftpWindow::open_upload_log()
+{
+    ShellExecuteW(NULL,QString("open").toStdWString().c_str(),QString("uploadlog.txt").toStdWString().c_str(),NULL,NULL,SW_SHOW);
 }

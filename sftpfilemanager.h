@@ -16,6 +16,8 @@ public:
 
     void flush_local_file(const QString& file_name, bool absolute = false);
 
+    void set_root_path(QString path){m_root_path = path;};
+
     void flush_local_file();
 
     void clear_file_record();
@@ -31,6 +33,8 @@ private:
     QVector<QString> m_path_record;
 
     QDir m_local_dir;
+
+    QString m_root_path;
 };
 
 #endif // SFTPFILEMANAGER_H

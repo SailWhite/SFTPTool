@@ -2,7 +2,6 @@
 #define FTPWINDOW_H
 
 #include <QHash>
-#include <QMutex>
 #include <QMessageBox>
 #include "ui_mainwindow.h"
 #include "sftpconfigmanager.h"
@@ -43,10 +42,6 @@ public:
 
     void display_file_path(QString& path);
 
-    SftpUploadDialog& get_upload_dialog();
-
-    QMutex m_mutex_lock;
-
 private:
     void init_singnals();
 
@@ -61,6 +56,8 @@ private:
     void add_server_info_item(QTreeWidget* tree, QTreeWidgetItem* server_item);
 
     void delete_server_info_item(QTreeWidget* tree, QTreeWidgetItem* server_item);
+
+    void reconnect_sftp_server();
 
 private slots:
     void change_combox_display(int index);
@@ -79,6 +76,8 @@ private slots:
 
     void backup_file();
 
+    void open_upload_log();
+
 public slots:
     void connect_sftp_server();
 
@@ -90,8 +89,6 @@ private:
     QHash<int, SftpFileManager*> m_file_manager;
 
     QHash<int, SftpList*> m_connector_list;
-
-    SftpUploadDialog m_upload_dialog;
 
     SftpBackupDialog* m_backup_dialog;
 
