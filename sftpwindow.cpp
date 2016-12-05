@@ -181,7 +181,6 @@ void SftpWindow::change_current_remote_path(QTreeWidgetItem* pItem, int column)
     int index = m_ui_context->COMBOX_GAME->currentIndex();
     if (0 == index)
     {
-        QString server = m_ui_context->TREE_99_SERVER->currentItem()->text(0);
         QString file_name = pItem->text(column);
 
         QList<QTreeWidgetItem*> list = m_ui_context->TREE_99_REMOTE_FILE->findItems(file_name, Qt::MatchExactly);
@@ -190,7 +189,12 @@ void SftpWindow::change_current_remote_path(QTreeWidgetItem* pItem, int column)
             return;
         }
 
-        m_connector_list.value(index)->value(server)->read_sftp_file_list(file_name);
+        QHash<QString, SftpConnector*>::iterator it = m_connector_list.value(index)->begin();
+        for (; it != m_connector_list.value(index)->end(); ++it)
+        {
+            (*it)->read_sftp_file_list(file_name);
+        }
+        //m_connector_list.value(index)->value(server)->read_sftp_file_list(file_name);
     }
     else if (1 == index)
     {
@@ -203,7 +207,12 @@ void SftpWindow::change_current_remote_path(QTreeWidgetItem* pItem, int column)
             return;
         }
 
-        m_connector_list.value(index)->value(server)->read_sftp_file_list(pItem->text(column));
+        QHash<QString, SftpConnector*>::iterator it = m_connector_list.value(index)->begin();
+        for (; it != m_connector_list.value(index)->end(); ++it)
+        {
+            (*it)->read_sftp_file_list(file_name);
+        }
+        //m_connector_list.value(index)->value(server)->read_sftp_file_list(pItem->text(column));
     }
     else if (2 == index)
     {
@@ -216,7 +225,12 @@ void SftpWindow::change_current_remote_path(QTreeWidgetItem* pItem, int column)
             return;
         }
 
-        m_connector_list.value(index)->value(server)->read_sftp_file_list(pItem->text(column));
+        QHash<QString, SftpConnector*>::iterator it = m_connector_list.value(index)->begin();
+        for (; it != m_connector_list.value(index)->end(); ++it)
+        {
+            (*it)->read_sftp_file_list(file_name);
+        }
+        //m_connector_list.value(index)->value(server)->read_sftp_file_list(pItem->text(column));
     }
 }
 

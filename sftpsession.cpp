@@ -160,6 +160,12 @@ void SftpSession::read_sftp_file_list(QString path)
         file_item->setIcon(0, icon);
         file_item->setText(0, item_name);
 
+        const long int time = (const long int)attrs.mtime;
+        tm* t= localtime(&time);
+        QString item_time;
+        item_time.sprintf("%d-%02d-%02d %02d:%02d",t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min);
+        file_item->setText(1, item_time);
+
         m_sftp_window->add_file_tree_item(m_sftp_window->get_current_remote_file_tree(), file_item);
     }
 
