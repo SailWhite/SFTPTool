@@ -93,6 +93,9 @@ void SftpWindow::init_window()
     m_ui_context->TREE_LOCAL->setColumnWidth(0, 280);
     m_ui_context->TREE_LOCAL->setSelectionMode(QTreeWidget::ExtendedSelection);
     m_ui_context->TREE_LOCAL->setSortingEnabled(true);
+    m_ui_context->TREE_99_REMOTE_FILE->setSortingEnabled(true);
+    m_ui_context->TREE_DUMMY_REMOTE_FILE->setSortingEnabled(true);
+    m_ui_context->TREE_KUNKA_REMOTE_FILE->setSortingEnabled(true);
 }
 
 void SftpWindow::init_local_file()
