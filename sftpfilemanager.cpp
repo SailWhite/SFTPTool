@@ -2,6 +2,7 @@
 #include "sftpwindow.h"
 #include "Windows.h"
 #include "ShellAPI.h"
+#include <QDateTime>
 
 SftpFileManager::SftpFileManager(SftpWindow* sftp_window)
 {
@@ -72,15 +73,19 @@ void SftpFileManager::flush_local_file(const QString& file_name, bool absolute)
         {
             continue;
         }
+
         QString file_name;
+        QDateTime file_time;
         QPixmap icon;
         QTreeWidgetItem* tree_item = new QTreeWidgetItem;
 
         file_name = it->fileName();
+        file_time = it->lastModified();
         get_file_icon(*it, icon);
 
         tree_item->setIcon(0, icon);
         tree_item->setText(0, file_name);
+        tree_item->setText(1, file_time.toString("yyyy/MM/dd  hh:mm"));
 
         m_sftp_window->add_file_tree_item(m_sftp_window->m_ui_context->TREE_LOCAL, tree_item);
     }
@@ -109,15 +114,19 @@ void SftpFileManager::flush_local_file()
         {
             continue;
         }
+
         QString file_name;
+        QDateTime file_time;
         QPixmap icon;
         QTreeWidgetItem* tree_item = new QTreeWidgetItem;
 
         file_name = it->fileName();
+        file_time = it->lastModified();
         get_file_icon(*it, icon);
 
         tree_item->setIcon(0, icon);
         tree_item->setText(0, file_name);
+        tree_item->setText(1, file_time.toString("yyyy/MM/dd  hh:mm"));
 
         m_sftp_window->add_file_tree_item(m_sftp_window->m_ui_context->TREE_LOCAL, tree_item);
     }

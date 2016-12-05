@@ -35,7 +35,7 @@ void MainWindow::start_init()
 void MainWindow::init_window()
 {
     setWindowFlags(Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
-    setFixedSize(690,526);
+    setFixedSize(1034,724);
     setWindowIcon(QIcon(":/images/SFTPTool.ico"));
 }
 

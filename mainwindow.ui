@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>690</width>
-    <height>526</height>
+    <width>1034</width>
+    <height>724</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,10 +20,10 @@
    <widget class="QGroupBox" name="GRPBOX_LOCAL">
     <property name="geometry">
      <rect>
-      <x>9</x>
+      <x>10</x>
       <y>10</y>
-      <width>291</width>
-      <height>501</height>
+      <width>441</width>
+      <height>701</height>
      </rect>
     </property>
     <property name="title">
@@ -34,13 +34,18 @@
       <rect>
        <x>10</x>
        <y>170</y>
-       <width>271</width>
-       <height>321</height>
+       <width>421</width>
+       <height>521</height>
       </rect>
      </property>
      <column>
       <property name="text">
        <string>文件名</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>修改时间</string>
       </property>
      </column>
     </widget>
@@ -49,7 +54,7 @@
       <rect>
        <x>54</x>
        <y>31</y>
-       <width>113</width>
+       <width>191</width>
        <height>20</height>
       </rect>
      </property>
@@ -59,7 +64,7 @@
       <rect>
        <x>54</x>
        <y>71</y>
-       <width>113</width>
+       <width>191</width>
        <height>20</height>
       </rect>
      </property>
@@ -69,7 +74,7 @@
       <rect>
        <x>54</x>
        <y>111</y>
-       <width>113</width>
+       <width>191</width>
        <height>20</height>
       </rect>
      </property>
@@ -116,7 +121,7 @@
     <widget class="QPushButton" name="BTN_LOGOUT">
      <property name="geometry">
       <rect>
-       <x>188</x>
+       <x>290</x>
        <y>89</y>
        <width>81</width>
        <height>23</height>
@@ -129,7 +134,7 @@
     <widget class="QPushButton" name="BTN_LOGIN">
      <property name="geometry">
       <rect>
-       <x>188</x>
+       <x>290</x>
        <y>48</y>
        <width>81</width>
        <height>23</height>
@@ -142,7 +147,7 @@
     <widget class="QPushButton" name="BTN_SELECT_PATH">
      <property name="geometry">
       <rect>
-       <x>260</x>
+       <x>380</x>
        <y>143</y>
        <width>21</width>
        <height>23</height>
@@ -157,7 +162,7 @@
       <rect>
        <x>44</x>
        <y>145</y>
-       <width>211</width>
+       <width>331</width>
        <height>20</height>
       </rect>
      </property>
@@ -182,10 +187,10 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>390</x>
+      <x>590</x>
       <y>10</y>
-      <width>291</width>
-      <height>501</height>
+      <width>431</width>
+      <height>701</height>
      </rect>
     </property>
     <property name="title">
@@ -196,7 +201,7 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>271</width>
+       <width>411</width>
        <height>131</height>
       </rect>
      </property>
@@ -229,8 +234,8 @@
       <rect>
        <x>10</x>
        <y>170</y>
-       <width>271</width>
-       <height>321</height>
+       <width>411</width>
+       <height>521</height>
       </rect>
      </property>
      <column>
@@ -251,10 +256,10 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>390</x>
+      <x>590</x>
       <y>10</y>
-      <width>291</width>
-      <height>501</height>
+      <width>431</width>
+      <height>701</height>
      </rect>
     </property>
     <property name="title">
@@ -268,7 +273,7 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>271</width>
+       <width>411</width>
        <height>131</height>
       </rect>
      </property>
@@ -301,8 +306,8 @@
       <rect>
        <x>10</x>
        <y>170</y>
-       <width>271</width>
-       <height>321</height>
+       <width>411</width>
+       <height>521</height>
       </rect>
      </property>
      <column>
@@ -323,10 +328,10 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>390</x>
+      <x>590</x>
       <y>10</y>
-      <width>291</width>
-      <height>501</height>
+      <width>431</width>
+      <height>701</height>
      </rect>
     </property>
     <property name="title">
@@ -337,7 +342,7 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>271</width>
+       <width>411</width>
        <height>131</height>
       </rect>
      </property>
@@ -370,8 +375,8 @@
       <rect>
        <x>10</x>
        <y>170</y>
-       <width>271</width>
-       <height>321</height>
+       <width>411</width>
+       <height>521</height>
       </rect>
      </property>
      <column>
@@ -389,8 +394,8 @@
    <widget class="QPushButton" name="BTN_UPLOAD">
     <property name="geometry">
      <rect>
-      <x>307</x>
-      <y>400</y>
+      <x>479</x>
+      <y>530</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -402,8 +407,8 @@
    <widget class="QPushButton" name="BTN_DOWNLOAD">
     <property name="geometry">
      <rect>
-      <x>307</x>
-      <y>470</y>
+      <x>479</x>
+      <y>620</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -415,8 +420,8 @@
    <widget class="QComboBox" name="COMBOX_GAME">
     <property name="geometry">
      <rect>
-      <x>304</x>
-      <y>59</y>
+      <x>480</x>
+      <y>80</y>
       <width>81</width>
       <height>22</height>
      </rect>
@@ -440,8 +445,8 @@
    <widget class="QPushButton" name="BTN_FLUSH_FILE">
     <property name="geometry">
      <rect>
-      <x>307</x>
-      <y>330</y>
+      <x>479</x>
+      <y>430</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -453,8 +458,8 @@
    <widget class="QPushButton" name="BTN_BACKUP">
     <property name="geometry">
      <rect>
-      <x>308</x>
-      <y>260</y>
+      <x>480</x>
+      <y>330</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -466,8 +471,8 @@
    <widget class="QPushButton" name="BTN_UPLOAD_LOG">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>190</y>
+      <x>482</x>
+      <y>230</y>
       <width>75</width>
       <height>23</height>
      </rect>

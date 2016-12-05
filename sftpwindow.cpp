@@ -84,10 +84,15 @@ void SftpWindow::init_window()
     m_ui_context->GRPBOX_DUMMY->hide();
     m_ui_context->GRPBOX_KUNKA->hide();
     m_ui_context->EDIT_PASSWORD->setEchoMode(QLineEdit::Password);
-    m_ui_context->TREE_99_SERVER->setColumnWidth(0, 150);
-    m_ui_context->TREE_DUMMY_SERVER->setColumnWidth(0, 150);
-    m_ui_context->TREE_KUNKA_SERVER->setColumnWidth(0, 150);
+    m_ui_context->TREE_99_SERVER->setColumnWidth(0, 280);
+    m_ui_context->TREE_DUMMY_SERVER->setColumnWidth(0, 280);
+    m_ui_context->TREE_KUNKA_SERVER->setColumnWidth(0, 280);
+    m_ui_context->TREE_99_REMOTE_FILE->setColumnWidth(0, 280);
+    m_ui_context->TREE_DUMMY_REMOTE_FILE->setColumnWidth(0, 280);
+    m_ui_context->TREE_KUNKA_REMOTE_FILE->setColumnWidth(0, 280);
+    m_ui_context->TREE_LOCAL->setColumnWidth(0, 280);
     m_ui_context->TREE_LOCAL->setSelectionMode(QTreeWidget::ExtendedSelection);
+    m_ui_context->TREE_LOCAL->setSortingEnabled(true);
 }
 
 void SftpWindow::init_local_file()
