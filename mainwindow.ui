@@ -2,485 +2,553 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
-  <property name="enabled">
-   <bool>true</bool>
-  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1034</width>
-    <height>724</height>
+    <width>1156</width>
+    <height>744</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
-   <string>SFTPTool</string>
+   <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QGroupBox" name="GRPBOX_LOCAL">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>441</width>
-      <height>701</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>本地文件</string>
-    </property>
-    <widget class="QTreeWidget" name="TREE_LOCAL">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>170</y>
-       <width>421</width>
-       <height>521</height>
-      </rect>
-     </property>
-     <column>
-      <property name="text">
-       <string>文件名</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>修改时间</string>
-      </property>
-     </column>
-    </widget>
-    <widget class="QLineEdit" name="EDIT_SERVER">
-     <property name="geometry">
-      <rect>
-       <x>54</x>
-       <y>31</y>
-       <width>191</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="EDIT_USER">
-     <property name="geometry">
-      <rect>
-       <x>54</x>
-       <y>71</y>
-       <width>191</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="EDIT_PASSWORD">
-     <property name="geometry">
-      <rect>
-       <x>54</x>
-       <y>111</y>
-       <width>191</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="LAB_SERVER">
-     <property name="geometry">
-      <rect>
-       <x>12</x>
-       <y>33</y>
-       <width>41</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>服务器</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="LAB_USER">
-     <property name="geometry">
-      <rect>
-       <x>18</x>
-       <y>73</y>
-       <width>31</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>用户</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="LAB_PASSWORD">
-     <property name="geometry">
-      <rect>
-       <x>18</x>
-       <y>113</y>
-       <width>31</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>密码</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="BTN_LOGOUT">
-     <property name="geometry">
-      <rect>
-       <x>290</x>
-       <y>89</y>
-       <width>81</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>断开</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="BTN_LOGIN">
-     <property name="geometry">
-      <rect>
-       <x>290</x>
-       <y>48</y>
-       <width>81</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>登录</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="BTN_SELECT_PATH">
-     <property name="geometry">
-      <rect>
-       <x>380</x>
-       <y>143</y>
-       <width>21</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>..</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="EDIT_LOCAL_PATH">
-     <property name="geometry">
-      <rect>
-       <x>44</x>
-       <y>145</y>
-       <width>331</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="LAB_LOCAL_PATH">
-     <property name="geometry">
-      <rect>
-       <x>11</x>
-       <y>146</y>
-       <width>31</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>路径</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="GRPBOX_KUNKA">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>590</x>
-      <y>10</y>
-      <width>431</width>
-      <height>701</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>kunka</string>
-    </property>
-    <widget class="QTreeWidget" name="TREE_KUNKA_SERVER">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>411</width>
-       <height>131</height>
-      </rect>
-     </property>
-     <column>
-      <property name="text">
-       <string notr="true">服务器</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>上传选项</string>
-      </property>
-     </column>
-    </widget>
-    <widget class="QLabel" name="LAB_KUNKA_PATH">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>152</y>
-       <width>311</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QTreeWidget" name="TREE_KUNKA_REMOTE_FILE">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>170</y>
-       <width>411</width>
-       <height>521</height>
-      </rect>
-     </property>
-     <column>
-      <property name="text">
-       <string>文件名</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>修改时间</string>
-      </property>
-     </column>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="GRPBOX_DUMMY">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>590</x>
-      <y>10</y>
-      <width>431</width>
-      <height>701</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>dummy</string>
-    </property>
-    <property name="checkable">
-     <bool>false</bool>
-    </property>
-    <widget class="QTreeWidget" name="TREE_DUMMY_SERVER">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>411</width>
-       <height>131</height>
-      </rect>
-     </property>
-     <column>
-      <property name="text">
-       <string notr="true">服务器</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>上传选项</string>
-      </property>
-     </column>
-    </widget>
-    <widget class="QLabel" name="LAB_DUMMY_PATH">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>152</y>
-       <width>311</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QTreeWidget" name="TREE_DUMMY_REMOTE_FILE">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>170</y>
-       <width>411</width>
-       <height>521</height>
-      </rect>
-     </property>
-     <column>
-      <property name="text">
-       <string>文件名</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>修改时间</string>
-      </property>
-     </column>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="GRPBOX_99">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>590</x>
-      <y>10</y>
-      <width>431</width>
-      <height>701</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>99</string>
-    </property>
-    <widget class="QTreeWidget" name="TREE_99_SERVER">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>411</width>
-       <height>131</height>
-      </rect>
-     </property>
-     <column>
-      <property name="text">
-       <string notr="true">服务器</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>上传选项</string>
-      </property>
-     </column>
-    </widget>
-    <widget class="QLabel" name="LAB_99_PATH">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>152</y>
-       <width>271</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QTreeWidget" name="TREE_99_REMOTE_FILE">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>170</y>
-       <width>411</width>
-       <height>521</height>
-      </rect>
-     </property>
-     <column>
-      <property name="text">
-       <string>文件名</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>修改时间</string>
-      </property>
-     </column>
-    </widget>
-   </widget>
-   <widget class="QPushButton" name="BTN_UPLOAD">
-    <property name="geometry">
-     <rect>
-      <x>479</x>
-      <y>530</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>一键上传</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="BTN_DOWNLOAD">
-    <property name="geometry">
-     <rect>
-      <x>479</x>
-      <y>620</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>下载</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="COMBOX_GAME">
-    <property name="geometry">
-     <rect>
-      <x>480</x>
-      <y>80</y>
-      <width>81</width>
-      <height>22</height>
-     </rect>
-    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <property name="text">
-      <string>99</string>
-     </property>
+     <widget class="QWidget" name="widget_2" native="true">
+      <property name="maximumSize">
+       <size>
+        <width>800</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_9">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>700</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>GroupBox</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="2" column="0">
+           <widget class="QTreeWidget" name="TREE_LOCAL">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <column>
+             <property name="text">
+              <string>文件名</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>修改时间</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QFrame" name="frame_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>400</width>
+              <height>200</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>200</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_5">
+             <item row="0" column="4">
+              <widget class="QPushButton" name="BTN_LOGIN">
+               <property name="text">
+                <string>登录</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="LAB_PASSWORD">
+               <property name="text">
+                <string>密码</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="2">
+              <widget class="QLineEdit" name="EDIT_PASSWORD"/>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="LAB_LOCAL_PATH">
+               <property name="text">
+                <string>路径</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="4">
+              <widget class="QPushButton" name="BTN_SELECT_PATH">
+               <property name="font">
+                <font>
+                 <family>楷体</family>
+                 <pointsize>9</pointsize>
+                 <weight>50</weight>
+                 <italic>false</italic>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>↵</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="4">
+              <widget class="QPushButton" name="BTN_LOGOUT">
+               <property name="text">
+                <string>断开</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="2">
+              <spacer name="verticalSpacer">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="7" column="2" colspan="2">
+              <widget class="QLineEdit" name="EDIT_LOCAL_PATH"/>
+             </item>
+             <item row="2" column="2">
+              <widget class="QLineEdit" name="EDIT_USER"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="LAB_USER">
+               <property name="text">
+                <string>用户</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLineEdit" name="EDIT_SERVER"/>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="LAB_SERVER">
+               <property name="text">
+                <string>服务器</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </item>
     <item>
-     <property name="text">
-      <string>dummy</string>
-     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
+      <item row="0" column="1">
+       <widget class="QFrame" name="frame">
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>724</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>150</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QComboBox" name="COMBOX_GAME">
+           <item>
+            <property name="text">
+             <string>99</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>dummy</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>kunka</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="BTN_UPLOAD_LOG">
+           <property name="text">
+            <string>上传日志</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="BTN_BACKUP">
+           <property name="text">
+            <string>备份</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="BTN_FLUSH_FILE">
+           <property name="text">
+            <string>刷新文件</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="BTN_UPLOAD">
+           <property name="text">
+            <string>一键上传</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="BTN_DOWNLOAD">
+           <property name="text">
+            <string>下载</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
-     <property name="text">
-      <string>kunka</string>
-     </property>
+     <widget class="QWidget" name="widget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>500</width>
+        <height>724</height>
+       </size>
+      </property>
+      <property name="cursor">
+       <cursorShape>ArrowCursor</cursorShape>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QGroupBox" name="GRPBOX_99">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>700</height>
+          </size>
+         </property>
+         <property name="cursor">
+          <cursorShape>ArrowCursor</cursorShape>
+         </property>
+         <property name="title">
+          <string>99</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_8">
+          <item row="0" column="0">
+           <widget class="QTreeWidget" name="TREE_99_SERVER">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>180</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>180</height>
+             </size>
+            </property>
+            <column>
+             <property name="text">
+              <string notr="true">服务器</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>上传选项</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="LAB_99_PATH">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QTreeWidget" name="TREE_99_REMOTE_FILE">
+            <column>
+             <property name="text">
+              <string>文件名</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>修改时间</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="GRPBOX_DUMMY">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>700</height>
+          </size>
+         </property>
+         <property name="inputMethodHints">
+          <set>Qt::ImhNone</set>
+         </property>
+         <property name="title">
+          <string>dummy</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="5" column="0">
+           <widget class="QTreeWidget" name="TREE_DUMMY_REMOTE_FILE">
+            <column>
+             <property name="text">
+              <string>文件名</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>修改时间</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="LAB_DUMMY_PATH">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QTreeWidget" name="TREE_DUMMY_SERVER">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>180</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>180</height>
+             </size>
+            </property>
+            <column>
+             <property name="text">
+              <string notr="true">服务器</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>上传选项</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="GRPBOX_KUNKA">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>700</height>
+          </size>
+         </property>
+         <property name="inputMethodHints">
+          <set>Qt::ImhNone</set>
+         </property>
+         <property name="title">
+          <string>kunka</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="0" column="0">
+           <widget class="QTreeWidget" name="TREE_KUNKA_SERVER">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>180</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>180</height>
+             </size>
+            </property>
+            <column>
+             <property name="text">
+              <string notr="true">服务器</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>上传选项</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QTreeWidget" name="TREE_KUNKA_REMOTE_FILE">
+            <column>
+             <property name="text">
+              <string>文件名</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>修改时间</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="LAB_KUNKA_PATH">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </item>
-   </widget>
-   <widget class="QPushButton" name="BTN_FLUSH_FILE">
-    <property name="geometry">
-     <rect>
-      <x>479</x>
-      <y>430</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>刷新文件</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="BTN_BACKUP">
-    <property name="geometry">
-     <rect>
-      <x>480</x>
-      <y>330</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>备份</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="BTN_UPLOAD_LOG">
-    <property name="geometry">
-     <rect>
-      <x>482</x>
-      <y>230</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>上传日志</string>
-    </property>
-   </widget>
+   </layout>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

@@ -85,34 +85,42 @@ void SftpBackupDialog::backup_file()
 
 void SftpBackupDialog::restore_file()
 {
-    QTreeWidget* server_tree = m_sftp_window->get_current_remote_server_tree();
     QTreeWidget* file_tree = m_sftp_window->get_current_remote_file_tree();
 
-
-    if (NULL != server_tree && NULL != file_tree)
+    if (NULL != file_tree)
     {
-        QTreeWidgetItem* server_item = server_tree->currentItem();
         QTreeWidgetItem* file_item = file_tree->currentItem();
 
-        QString server_name = server_item->text(0);
         QString file_name = file_item->text(0);
 
         int index = m_sftp_window->m_ui_context->COMBOX_GAME->currentIndex();
 
         if (0 == index)
         {
-            m_connector_list.value(index)->value(server_name)->upload_file(file_name, BACKUP_FILE_PATH_99);
-            m_connector_list.value(index)->value(server_name)->run_upload();
+            QHash<QString, SftpConnector*>::iterator it = m_connector_list.value(index)->begin();
+            for (; it != m_connector_list.value(index)->end(); ++it)
+            {
+                (*it)->upload_file(file_name, BACKUP_FILE_PATH_99);
+                (*it)->run_upload();
+            }
         }
         else if (1 == index)
         {
-            m_connector_list.value(index)->value(server_name)->upload_file(file_name, BACKUP_FILE_PATH_DUMMY);
-            m_connector_list.value(index)->value(server_name)->run_upload();
+            QHash<QString, SftpConnector*>::iterator it = m_connector_list.value(index)->begin();
+            for (; it != m_connector_list.value(index)->end(); ++it)
+            {
+                (*it)->upload_file(file_name, BACKUP_FILE_PATH_DUMMY);
+                (*it)->run_upload();
+            }
         }
         else if (2 == index)
         {
-            m_connector_list.value(index)->value(server_name)->upload_file(file_name, BACKUP_FILE_PATH_KUNKA);
-            m_connector_list.value(index)->value(server_name)->run_upload();
+            QHash<QString, SftpConnector*>::iterator it = m_connector_list.value(index)->begin();
+            for (; it != m_connector_list.value(index)->end(); ++it)
+            {
+                (*it)->upload_file(file_name, BACKUP_FILE_PATH_KUNKA);
+                (*it)->run_upload();
+            }
         }
     }
     hide();

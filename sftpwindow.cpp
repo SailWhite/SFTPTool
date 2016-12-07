@@ -314,7 +314,7 @@ void SftpWindow::upload_file()
     }
 
     QSet<SftpConnector*> sftp_session;
-    for (int i; i < items.count(); ++i)
+    for (int i = 0; i < items.count(); ++i)
     {
         QString file_name = items.at(i)->text(0);
 
