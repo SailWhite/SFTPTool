@@ -68,6 +68,26 @@ QString SftpConfigManager::get_local_file_path(int index)
     return qvalue;
 }
 
+QString SftpConfigManager::get_remote_file_path(int index)
+{
+    std::string value;
+    if (0 == index)
+    {
+        value = m_json_root["99_remote_root_path"].asString();
+    }
+    else if (1 == index)
+    {
+        value = m_json_root["dummy_remote_root_path"].asString();
+    }
+    else if (2 == index)
+    {
+        value = m_json_root["kunka_remote_root_path"].asString();
+    }
+
+    QString qvalue(value.c_str());
+    return qvalue;
+}
+
 void SftpConfigManager::load_server_config()
 {
     Json::Value game_id = m_json_root["99"];

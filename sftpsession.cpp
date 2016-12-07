@@ -103,7 +103,11 @@ void SftpSession::set_server_name(QString& server_name)
 
 void SftpSession::read_sftp_file_list(QString path)
 {
-    m_sftp_session = libssh2_sftp_init(m_libssh2_session);
+    if (!m_sftp_session)
+    {
+        m_sftp_session = libssh2_sftp_init(m_libssh2_session);
+    }
+
     if (!m_sftp_session)
     {
         m_sftp_window->display_error_code(1);
@@ -134,7 +138,8 @@ void SftpSession::read_sftp_file_list(QString path)
         m_sftp_window->add_parent_path();
     }
 
-    while (0 < libssh2_sftp_readdir(m_sftp_directory_handle, file_name, sizeof(file_name), &attrs))
+    char file_info[128];
+    while (0 < libssh2_sftp_readdir_ex(m_sftp_directory_handle, file_name, sizeof(file_name), file_info, sizeof(file_info), &attrs))
     {
         if ('.' == file_name[0] || '\0' == file_name)
         {
@@ -166,6 +171,12 @@ void SftpSession::read_sftp_file_list(QString path)
         item_time.sprintf("%d/%02d/%02d  %02d:%02d",t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min);
         file_item->setText(1, item_time);
 
+        QString info(file_info);
+        QStringList info_list = info.split(" ");
+
+        file_item->setText(2, info_list.at(0));
+        file_item->setText(3, info_list.at(5));
+
         m_sftp_window->add_file_tree_item(m_sftp_window->get_current_remote_file_tree(), file_item);
     }
 
@@ -195,7 +206,11 @@ bool SftpSession::is_directory(QString& file_name)
 
 void SftpSession::download_file(QString& file_name, QString save_path)
 {
-    m_sftp_session = libssh2_sftp_init(m_libssh2_session);
+    if (!m_sftp_session)
+    {
+        m_sftp_session = libssh2_sftp_init(m_libssh2_session);
+    }
+
     if (!m_sftp_session || file_name.isEmpty())
     {
         m_sftp_window->display_error_code(1);
@@ -347,7 +362,11 @@ void SftpSession::update_upload_progress_dialog()
 
 int SftpSession::upload_file(QString& file_name, QString& absolute_path)
 {
-    m_sftp_session = libssh2_sftp_init(m_libssh2_session);
+    if (!m_sftp_session)
+    {
+        m_sftp_session = libssh2_sftp_init(m_libssh2_session);
+    }
+
     if (!m_sftp_session || file_name.isEmpty())
     {
         m_sftp_window->display_error_code(1);

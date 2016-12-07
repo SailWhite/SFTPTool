@@ -90,6 +90,9 @@ void SftpWindow::init_window()
     m_ui_context->TREE_99_REMOTE_FILE->setColumnWidth(0, 280);
     m_ui_context->TREE_DUMMY_REMOTE_FILE->setColumnWidth(0, 280);
     m_ui_context->TREE_KUNKA_REMOTE_FILE->setColumnWidth(0, 280);
+    m_ui_context->TREE_99_REMOTE_FILE->setColumnWidth(1, 150);
+    m_ui_context->TREE_DUMMY_REMOTE_FILE->setColumnWidth(1, 150);
+    m_ui_context->TREE_KUNKA_REMOTE_FILE->setColumnWidth(1, 150);
     m_ui_context->TREE_LOCAL->setColumnWidth(0, 280);
     m_ui_context->TREE_LOCAL->setSelectionMode(QTreeWidget::ExtendedSelection);
     m_ui_context->TREE_LOCAL->setSortingEnabled(true);
@@ -187,9 +190,11 @@ void SftpWindow::change_current_local_path(QTreeWidgetItem* pItem, int column)
 void SftpWindow::change_current_remote_path(QTreeWidgetItem* pItem, int column)
 {
     int index = m_ui_context->COMBOX_GAME->currentIndex();
+    QString server;
     if (0 == index)
     {
         QString file_name = pItem->text(column);
+        server = m_ui_context->TREE_99_SERVER->currentItem()->text(0);
 
         QList<QTreeWidgetItem*> list = m_ui_context->TREE_99_REMOTE_FILE->findItems(file_name, Qt::MatchExactly);
         if (0 == list.count())
@@ -200,14 +205,18 @@ void SftpWindow::change_current_remote_path(QTreeWidgetItem* pItem, int column)
         QHash<QString, SftpConnector*>::iterator it = m_connector_list.value(index)->begin();
         for (; it != m_connector_list.value(index)->end(); ++it)
         {
+            if (server == it.key())
+            {
+                continue;
+            }
             (*it)->read_sftp_file_list(file_name);
         }
-        //m_connector_list.value(index)->value(server)->read_sftp_file_list(file_name);
+        m_connector_list.value(index)->value(server)->read_sftp_file_list(file_name);
     }
     else if (1 == index)
-    {
-        QString server = m_ui_context->TREE_DUMMY_SERVER->currentItem()->text(0);
+    {      
         QString file_name = pItem->text(column);
+        server = m_ui_context->TREE_DUMMY_SERVER->currentItem()->text(0);
 
         QList<QTreeWidgetItem*> list = m_ui_context->TREE_DUMMY_REMOTE_FILE->findItems(file_name, Qt::MatchExactly);
         if (0 == list.count())
@@ -218,14 +227,18 @@ void SftpWindow::change_current_remote_path(QTreeWidgetItem* pItem, int column)
         QHash<QString, SftpConnector*>::iterator it = m_connector_list.value(index)->begin();
         for (; it != m_connector_list.value(index)->end(); ++it)
         {
+            if (server == it.key())
+            {
+                continue;
+            }
             (*it)->read_sftp_file_list(file_name);
         }
-        //m_connector_list.value(index)->value(server)->read_sftp_file_list(pItem->text(column));
+        m_connector_list.value(index)->value(server)->read_sftp_file_list(file_name);
     }
     else if (2 == index)
-    {
-        QString server = m_ui_context->TREE_KUNKA_SERVER->currentItem()->text(0);
+    {      
         QString file_name = pItem->text(column);
+        server = m_ui_context->TREE_KUNKA_SERVER->currentItem()->text(0);
 
         QList<QTreeWidgetItem*> list = m_ui_context->TREE_KUNKA_REMOTE_FILE->findItems(file_name, Qt::MatchExactly);
         if (0 == list.count())
@@ -236,9 +249,13 @@ void SftpWindow::change_current_remote_path(QTreeWidgetItem* pItem, int column)
         QHash<QString, SftpConnector*>::iterator it = m_connector_list.value(index)->begin();
         for (; it != m_connector_list.value(index)->end(); ++it)
         {
+            if (server == it.key())
+            {
+                continue;
+            }
             (*it)->read_sftp_file_list(file_name);
         }
-        //m_connector_list.value(index)->value(server)->read_sftp_file_list(pItem->text(column));
+        m_connector_list.value(index)->value(server)->read_sftp_file_list(file_name);
     }
 }
 
@@ -431,7 +448,13 @@ void SftpWindow::connect_sftp_server()
     }
 
     //get remote file
-    sftp_connector->read_sftp_file_list(".");
+    QString remote_root_path = SftpConfigManager::instance()->get_remote_file_path(current_game);
+    QStringList file = remote_root_path.split("/");
+    QStringList::iterator it = file.begin();
+    for (; it != file.end(); ++it)
+    {
+        sftp_connector->read_sftp_file_list((*it));
+    }
 
     //success
     m_connector_list.value(current_game)->insert(server, sftp_connector);

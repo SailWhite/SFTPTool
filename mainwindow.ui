@@ -380,6 +380,16 @@
               <string>修改时间</string>
              </property>
             </column>
+            <column>
+             <property name="text">
+              <string>权限</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>所属用户</string>
+             </property>
+            </column>
            </widget>
           </item>
          </layout>
@@ -425,6 +435,16 @@
             <column>
              <property name="text">
               <string>修改时间</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>权限</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>所属用户</string>
              </property>
             </column>
            </widget>
@@ -531,6 +551,16 @@
             <column>
              <property name="text">
               <string>修改时间</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>权限</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>所属用户</string>
              </property>
             </column>
            </widget>

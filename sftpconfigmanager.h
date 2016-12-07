@@ -21,6 +21,8 @@ public:
 
     QString get_local_file_path(int index);
 
+    QString get_remote_file_path(int index);
+
     QVector<SERVER_CFG>& get_server_config();
 
 private:
