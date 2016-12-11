@@ -399,7 +399,7 @@ int SftpSession::upload_file(QString& file_name, QString& absolute_path)
     }
 
     //path file
-    QString file_path = m_current_path.back() + "/" + file_name;
+    QString file_path = m_current_path.back() + "/" + file_name + ".sftptemp";
     LIBSSH2_SFTP_HANDLE* sftp_file_handle = libssh2_sftp_open(m_sftp_session, file_path.toLatin1().data(),
                           LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC,
                           LIBSSH2_SFTP_S_IRUSR|LIBSSH2_SFTP_S_IWUSR|
@@ -426,6 +426,8 @@ int SftpSession::upload_file(QString& file_name, QString& absolute_path)
     m_sftp_upload_handles.insert(item_name, sftp_file_handle);
     m_upload_files.insert(item_name, tempstorage);
 
+    m_upload_file_path.insert(item_name, m_current_path.back() + "/" + file_name);
+
     //log
     time_t sec_time = time(NULL);
     tm* t= localtime(&sec_time);
@@ -451,14 +453,6 @@ void SftpSession::exit_download()
 
 void SftpSession::exit_upload()
 {
-    //m_mutex_lock.lock();
-    QHash<QString, LIBSSH2_SFTP_HANDLE*>::iterator it_handles = m_sftp_upload_handles.begin();
-    for (; it_handles != m_sftp_upload_handles.end(); ++it_handles)
-    {
-        delete (*it_handles);
-    }
-    m_sftp_upload_handles.clear();
-
     QHash<QString, FILE*>::iterator it_files = m_upload_files.begin();
     for (; it_files != m_upload_files.end(); ++it_files)
     {
@@ -470,7 +464,25 @@ void SftpSession::exit_upload()
 
     m_upload_dialog.hide_upload_dialog();
     m_upload_dialog.clear_item();
-    //m_mutex_lock.unlock();
+
+    QHash<QString, LIBSSH2_SFTP_HANDLE*>::iterator it = m_sftp_upload_handles.begin();
+    for (; it != m_sftp_upload_handles.end(); ++it)
+    {
+       libssh2_sftp_unlink(m_sftp_session, (m_upload_file_path.value(it.key())).toLatin1().data());
+       libssh2_sftp_rename(m_sftp_session, (m_upload_file_path.value(it.key()) + ".sftptemp").toLatin1().data(),
+                              (m_upload_file_path.value(it.key())).toLatin1().data());
+    }
+
+    m_upload_file_path.clear();
+
+    QHash<QString, LIBSSH2_SFTP_HANDLE*>::iterator it_handles = m_sftp_upload_handles.begin();
+    for (; it_handles != m_sftp_upload_handles.end(); ++it_handles)
+    {
+        libssh2_sftp_close_handle(*it_handles);
+        //delete (*it_handles);
+    }
+    m_sftp_upload_handles.clear();
+
     m_sftp_window->m_ui_context->centralWidget->setEnabled(true);
 }
 

@@ -102,6 +102,7 @@ void SftpConnector::read_sftp_file_list(QString file)
             current_path->pop_back();
             if (0 == current_path->count())
             {
+                current_path->push_back(".");
                 return;
             }
             m_sftp_session->read_sftp_file_list(current_path->back());

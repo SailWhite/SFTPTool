@@ -109,6 +109,8 @@ private:
 
     QVector<QString> m_current_path;
 
+    QHash<QString, QString> m_upload_file_path;
+
     QString m_server_name;
 
     QMutex m_mutex_lock;
